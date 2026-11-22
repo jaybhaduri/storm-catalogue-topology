@@ -1,0 +1,14 @@
+{
+  "title": "storm-catalogue-topology: code and derived data for a preregistered test of topological storm features and satellite-catalogue degradation",
+  "upload_type": "software",
+  "description": "Analysis code, public input snapshots and derived data for 'Topological storm features do not predict satellite-catalogue degradation: a preregistered machine-learning test across 206 geomagnetic storms'. The code builds storm catalogues from WDC Kyoto Dst, derives daily catalogue-custody targets from public Space-Track general-perturbations element sets (not redistributed), computes persistent-homology (Betti-curve) features of storm Dst time series, and runs the two preregistered analyses (Registration 1: doi:10.5281/zenodo.24421887; Registration 3: doi:10.5281/zenodo.24423000). Written with the assistance of Claude Code (Anthropic).",
+  "creators": [
+    {"name": "Bhaduri, Jayabrata", "affiliation": "CapaCloud Corp", "orcid": "0000-0001-6190-145X"}
+  ],
+  "license": "MIT",
+  "keywords": ["geomagnetic storms", "persistent homology", "satellite catalogue", "space situational awareness", "preregistration", "machine learning"],
+  "related_identifiers": [
+    {"identifier": "10.5281/zenodo.24421887", "relation": "isSupplementTo", "scheme": "doi"},
+    {"identifier": "10.5281/zenodo.24423000", "relation": "isSupplementTo", "scheme": "doi"}
+  ]
+}
