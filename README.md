@@ -1,5 +1,7 @@
 # Storm topology and satellite-catalogue degradation
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24436017.svg)](https://doi.org/10.5281/zenodo.24436017)
+
 Code and derived data for *Topological storm features do not predict satellite-catalogue degradation:
 a preregistered machine-learning test across 206 geomagnetic storms* (J. Bhaduri, CapaCloud Corp).
 Correspondence: ceo@capa.cloud.
@@ -63,3 +65,8 @@ python -m pytest -q -m "not network"
 
 Code: [MIT](LICENSE). The public input snapshots keep their providers' terms (GFZ Kp and Hp30: CC BY 4.0;
 cite WDC Kyoto, NASA SPDF and Space Environment Technologies as listed in `data/snapshots/manifest.json`).
+
+## Cite
+
+Bhaduri, J. (2026). *storm-catalogue-topology* (v1.0.0) [Software]. Zenodo.
+https://doi.org/10.5281/zenodo.24436018 (all versions: https://doi.org/10.5281/zenodo.24436017)
