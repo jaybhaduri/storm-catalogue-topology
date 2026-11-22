@@ -1,0 +1,120 @@
+# PHINN-SW WP1 configuration. Values that the protocol freezes on 15 January 2027 live here.
+
+snapshot:
+  end: 2025-12-31            # last day kept in every snapshot (study period ends 2025)
+  dir: data/snapshots
+
+sources:
+  kyoto_dst:
+    start: 1957-01-01        # the full record: the 1957-present envelope (gate 3) needs it
+    hapi: https://wdc.kugi.kyoto-u.ac.jp/hapi
+    dataset: hour_dst        # best available per hour, with its version code
+  omni2_hourly:
+    start_year: 1963
+    url: https://spdf.gsfc.nasa.gov/pub/data/omni/low_res_omni/omni2_{year}.dat
+  gfz:
+    url: https://kp.gfz.de/app/json/
+    kp_start: 1932-01-01
+    hp30_start: 1995-01-01
+  set_jb2008:
+    solfsmy: https://sol.spacenvironment.net/JB2008/indices/SOLFSMY.TXT
+    dtcfile: https://sol.spacenvironment.net/JB2008/indices/DTCFILE.TXT
+  spacetrack:
+    base: https://www.space-track.org
+    leo_min_mean_motion: 11.25   # rev/day; about 2,000 km altitude or below
+    start: 2000-01-01
+    window_days: 10            # one API request per 10 days of history
+
+proxies:                     # WP2 custody proxies (paper 3.4); frozen with the protocol
+  max_pair_gap_days: 10      # consecutive element sets further apart than this are not compared
+  quiet_kp_max: 3.0          # quiet day for baselines and gates: daily maximum Kp <= 3
+  gates_km: [5, 10, 25]      # fixed correlation gates (sensitivity cases)
+  quiet_quantile: 0.99       # band gate: quiet-time 99th percentile of the position correction
+  stale_hours: [24, 48, 72]
+  max_age_d: 30              # an object counts as tracked while its newest set is at most 30 days old
+  raise_km: 0.5              # a payload semi-major-axis step up larger than this is an orbit raise
+  active_window_d: 365       # payloads raised within the last year are "active"
+
+topology:                    # WP3 Dst fingerprints (paper 3.5); frozen with the protocol
+  d: 3                       # embedding dimension
+  tau_h: 3                   # delay: points are (Dst_t, Dst_t+3, Dst_t+6)
+  window_h: 24
+  step_h: 3
+  grid_min_nT: 0             # absolute filtration scale (edge length), not a relative one
+  grid_max_nT: 60
+  grid_step_nT: 1
+  track_scale_nT: 15         # tracking series: beta0 at 15 nT
+  n_surrogates: 99           # IAAFT surrogates per storm: smallest two-sided p is 0.02 (19 gave only 0.10)
+
+part_a:                      # Registration 1 (Part A: H1, H2) analysis settings; frozen at registration
+  population: inactive       # primary population
+  max_altitude_km: 600       # primary band: mean altitude below 600 km
+  peak_window_days: [0, 10]  # peak taken from day 0 to day +10 after the Dst minimum
+  primary_proxies:           # outcome = log(peak ratio) against the storm's controls
+    P1: p1_stale_over_24h / n_tracked
+    P2: p2_objects_z_over_3 / n_pairs
+    P3: p3_objects_over_quiet_q99 / n_tracked
+    P4: p4_da_median_km_per_day
+  secondary_proxies: [p1_stale_over_48h, p1_stale_over_72h, p3_objects_over_5km, p3_objects_over_10km, p3_objects_over_25km, p4_reentries]
+  covariates: [f107_window_mean, log_catalogue_size, publication_cadence_30d, sin_doy, cos_doy]
+  models:
+    M0: [dst_min_nT]
+    M1: [dst_min_nT, hours_below_100, integrated_dst_nTh]
+    M2: [dst_min_nT, hours_below_100, integrated_dst_nTh, betti_pc1, betti_pc2]
+  betti_features: [beta0_track_max, beta0_track_mean, beta1_track_max, b0_area, beta1_total]
+  cross_validation: leave_one_storm_out
+  test: wilcoxon_signed_rank_one_sided
+  bootstrap_resamples: 2000
+  alpha: 0.05
+  multiple_comparisons: holm   # across the four primary proxies within each hypothesis
+  min_effect: 0.05             # relative reduction in LOSO mean squared error
+  supported_if_proxies: 3      # of 4
+  vif_ridge_threshold: 10
+  ridge_penalty: 1.0
+  min_storms_per_proxy: 80
+  exclude_from_models: ["February 2022 Starlink loss"]
+  robustness: [huber, exclude_severe, exclude_2000_04_07_and_2000_07_16, final_dst_only, secondary_proxies, all_inactive_leo_and_active, original_control_rule]
+
+physics:                     # WP5 physics gate (paper 3.7); frozen with the protocol
+  gate1:
+    omni_start: 1995-01-01   # continuous L1 coverage
+    threshold_quantile: 0.99 # GPD threshold; check with mean-residual-life plots before the freeze
+    decluster_h: 48          # exceedances closer than this belong to one event
+    return_years: [50, 100, 500]   # 100 is the primary bound; 50 and 500 are sensitivity cases
+    n_boot: 300
+  envelope:
+    record_min_nT: -589      # March 1989
+    carrington_range: [-850, -1150]
+    intensity_tolerance: 0.3 # "comparable intensity": minimum Dst within +/-30%
+    density_floor_quantile: 0.01
+
+storms:
+  threshold_nT: -100         # intense storm (Gonzalez et al., 1994)
+  severe_nT: -250
+  merge_gap_h: 24            # runs below threshold separated by less than this are one storm
+  window_before_d: 3
+  window_after_d: 10
+  study_start: 2000-01-01
+  study_end: 2025-12-31
+
+  anchors:                   # named events kept even if Dst stays above the threshold (paper 3.3)
+    - {name: "February 2022 Starlink loss", search_start: 2022-02-01, search_end: 2022-02-06}
+
+# DECIDED 20 Nov 2026 (design decision 8). The paper's original rule (14 days, Kp <= 3 throughout,
+# F10.7 within 20 sfu, season +/-45 d, year +/-1, unique) finds 5 controls for 0 of 107 storms: quiet
+# 14-day stretches occur near solar minimum, severe storms near solar maximum. Rule "K" below finds 5
+# controls for 106 of 107 storms and all 10 severe ones. Remaining differences (season, catalogue
+# size, F10.7) are handled as covariates in WP2. Original rule, kept as a sensitivity case: kp_max 3.0, f107 20, season 45,
+# year 1, allow_reuse false.
+controls:
+  per_storm: 5
+  length_d: 14
+  kp_max: 4.67               # no G1-or-higher conditions throughout (Kp 5- or below)
+  f107_tolerance_sfu: 40
+  season_tolerance_d: 183    # any season
+  year_tolerance: 3          # catalogue year within +/-3; WP2 normalises proxies by catalogue size
+  allow_reuse: true          # a quiet window may serve as a control for more than one storm
+
+split:                       # design decision 2, revised 20 Nov 2026 (decision 9): 5 severe storms each side
+  development: [2000, 2002]
+  held_out: [2003, 2025]

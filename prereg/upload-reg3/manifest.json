@@ -1,0 +1,123 @@
+{
+  "gfz_hp30": {
+    "name": "gfz_hp30",
+    "file": "gfz_hp30.parquet",
+    "rows": 543504,
+    "columns": [
+      "time",
+      "Hp30",
+      "status"
+    ],
+    "first": "1995-01-01 00:00:00",
+    "last": "2025-12-31 23:30:00",
+    "file_sha256": "9a84c54fe45db832a8b44e20e0f75661a27548ff4c0ac95599e0cbe57c918940",
+    "content_sha256": "76354f6b1487b9c13a5e17925fde9c8a2d145668eda731a4073992d4673550dd",
+    "retrieved_utc": "2026-11-20T17:03:50Z",
+    "source": "GFZ Potsdam Hp30 web service",
+    "license": "CC BY 4.0",
+    "citation": "Yamazaki et al. (2022), doi:10.5880/Hpo.0002"
+  },
+  "gfz_kp": {
+    "name": "gfz_kp",
+    "file": "gfz_kp.parquet",
+    "rows": 274672,
+    "columns": [
+      "time",
+      "Kp",
+      "status"
+    ],
+    "first": "1932-01-01 00:00:00",
+    "last": "2025-12-31 21:00:00",
+    "file_sha256": "01cf01cc0372f233f13acd34aad189a4d14f9a09e59b091677d360693b8a6489",
+    "content_sha256": "0d703276d8046b7069677536f8200764c7126960d0082cb116d09d77365591d7",
+    "retrieved_utc": "2026-11-20T17:02:30Z",
+    "source": "GFZ Potsdam Kp web service",
+    "license": "CC BY 4.0",
+    "citation": "Matzka et al. (2021), doi:10.5880/Kp.0001"
+  },
+  "kyoto_dst": {
+    "name": "kyoto_dst",
+    "file": "kyoto_dst.parquet",
+    "rows": 604848,
+    "columns": [
+      "time",
+      "dst_nT",
+      "version_code",
+      "version"
+    ],
+    "first": "1957-01-01 00:00:00",
+    "last": "2025-12-31 23:00:00",
+    "file_sha256": "d99ba882b4b21d7c4e65df6927d46cacb4a385b55e400ffc766aa7664301b31f",
+    "content_sha256": "9205e9c482ca2634193f9d894bee561956305e8d3ddf2a0214861cf93f00553a",
+    "retrieved_utc": "2026-11-20T16:55:35Z",
+    "source": "WDC for Geomagnetism, Kyoto (HAPI hour_dst, best available)",
+    "citation": "World Data Center for Geomagnetism, Kyoto, Nose et al. (2015), doi:10.17593/14515-74000",
+    "note": "version column: final, provisional or realtime, per hour"
+  },
+  "omni2_hourly": {
+    "name": "omni2_hourly",
+    "file": "omni2_hourly.parquet",
+    "rows": 552264,
+    "columns": [
+      "time",
+      "B_nT",
+      "Bx_gse_nT",
+      "By_gsm_nT",
+      "Bz_gsm_nT",
+      "T_K",
+      "n_cc",
+      "V_kms",
+      "Pdyn_nPa",
+      "Ey_mVm",
+      "dst_omni_nT",
+      "ap",
+      "f107_sfu",
+      "Kp"
+    ],
+    "first": "1963-01-01 00:00:00",
+    "last": "2025-12-31 23:00:00",
+    "file_sha256": "5435fe57858aaa5bfc9c7de8078ec3fdd200d81a54ea383dee2432c1dfc3ee0c",
+    "content_sha256": "ef4470e2823931a7abda8123653c2ba24413554e317cceb5e3d011a2ba130fa8",
+    "retrieved_utc": "2026-11-20T17:00:01Z",
+    "source": "NASA SPDF OMNI2 hourly (low_res_omni)",
+    "citation": "King and Papitashvili (2005), JGR 110, A02104"
+  },
+  "set_dtc": {
+    "name": "set_dtc",
+    "file": "set_dtc.parquet",
+    "rows": 254208,
+    "columns": [
+      "time",
+      "DTC_K"
+    ],
+    "first": "1997-01-01 00:00:00",
+    "last": "2025-12-31 23:00:00",
+    "file_sha256": "26525cbc94e114fbfaace38811188d86f8419a603967b6b0792f121cc152f098",
+    "content_sha256": "b1d4c82b1c85afae4deeb32c44a8b151e13a93a8dca9e0e235a3c3394831f4cb",
+    "retrieved_utc": "2026-11-20T17:03:56Z",
+    "source": "Space Environment Technologies DTCFILE.TXT (JB2008 hourly DTC)"
+  },
+  "set_solfsmy": {
+    "name": "set_solfsmy",
+    "file": "set_solfsmy.parquet",
+    "rows": 10592,
+    "columns": [
+      "date",
+      "F10",
+      "F81c",
+      "S10",
+      "S81c",
+      "M10",
+      "M81c",
+      "Y10",
+      "Y81c",
+      "Ssrc"
+    ],
+    "first": "1997-01-01 00:00:00",
+    "last": "2025-12-31 00:00:00",
+    "file_sha256": "36f4525aa438cfec27cf2da4634a6d4b24d0fee52e40a5a243f140d2a09b37bf",
+    "content_sha256": "2fa4822a649ce7545bb69affa9e00a5494e392436c0e1d8995684d49355e40f5",
+    "retrieved_utc": "2026-11-20T17:03:55Z",
+    "source": "Space Environment Technologies SOLFSMY.TXT (JB2008 solar indices)"
+  }
+}

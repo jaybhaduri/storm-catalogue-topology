@@ -1,0 +1,134 @@
+<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Georgia,serif;font-size:10.5pt;line-height:1.45;max-width:170mm;margin:auto}h1{font-size:16pt}h2{font-size:13pt;margin-top:18pt;border-bottom:1px solid #999}h3{font-size:11pt;margin-bottom:2pt}table{border-collapse:collapse}td,th{border:1px solid #999;padding:3pt 6pt;font-size:9.5pt}code{font-size:9pt}@page{size:A4;margin:18mm}</style></head><body><h1>A Thousand Gannons, Part A: Storm-locked degradation of the public satellite catalogue and the predictive value of storm shape</h1>
+<p><strong>Preregistration 1 of 2</strong> (secondary-data preregistration). Registration 2 (Part B: physics-gated synthetic storm ensembles and their calibration, H4) is filed separately.</p>
+<ul>
+<li>Author: Jayabrata Bhaduri (CapaCloud Corp; ORCID 0000-0001-6190-145X)</li>
+<li>Authorship note: the version filed on Zenodo (v1) listed a second co-author, who asked on 21 November 2026 to be removed; the Zenodo author list and this text were updated accordingly. Nothing else in the registration was changed.</li>
+<li>Frozen analysis code and settings: repository commit <code>f87999f2a70c9180302a8f7019c7bd3b66f0d572</code> (private until publication; the attached <code>config.yaml</code> is the settings file at that commit)</li>
+<li>Structure: follows the questions of the OSF "Secondary Data Preregistration" template</li>
+</ul>
+<h2>1. Study information</h2>
+<h3>Description</h3>
+<p>Preregistration of the observational part (Part A) of a study of how severe geomagnetic storms degrade the public catalogue of low-Earth-orbit objects. Using only public data (Space-Track general-perturbations element sets, WDC Kyoto Dst, GFZ Kp, NASA OMNI), we test whether storm-locked degradation of custody proxies scales with storm duration at least as strongly as with storm intensity (H1), and whether topological features of the storm's Dst time series improve out-of-sample prediction of that degradation beyond Dst level summaries (H2).</p>
+<h3>Research questions</h3>
+<ul>
+<li><strong>RQ1.</strong> Does the public LEO catalogue show measurable, storm-locked degradation in custody proxies, and does the size of that degradation depend on storm duration as well as storm intensity?</li>
+<li><strong>RQ2.</strong> Do topological (Betti) features of a storm's Dst time series predict catalogue degradation beyond Dst level summaries?</li>
+</ul>
+<h3>Hypotheses</h3>
+<ul>
+<li><strong>H1 (directional).</strong> For each primary proxy, adding storm duration (hours with Dst below −100 nT) and integrated Dst to a model that already contains minimum Dst reduces the leave-one-storm-out prediction error of the storm's peak proxy value. Rationale: Oliveira and Zesta (2019) and Oliveira et al. (2020) found storm duration as important as intensity for orbital decay. H1 is falsified if the nested model does not reduce out-of-sample error under the inference criteria in section 5.</li>
+<li><strong>H2 (directional).</strong> Adding Betti features of the storm's Dst series to the Dst-summary model reduces the leave-one-storm-out prediction error of the same proxy peaks. H2 is falsified if the reduction is not significant after correction for multiple comparisons (section 5). Two preconditions are reported with H2: permuting the hours of a storm window must leave level statistics unchanged but change the Betti features (shuffle test), and Betti features must separate real storms from IAAFT surrogates that preserve the spectrum and amplitude distribution.</li>
+</ul>
+<h2>2. Data description</h2>
+<h3>Datasets used</h3>
+<p>Five public, longitudinal datasets, all cut at 31 December 2025:</p>
+<ol>
+<li>Space-Track.org general-perturbations (GP) element-set history for objects with mean motion above 11.25 revolutions per day (low Earth orbit), 1 January 2000 to 31 December 2025, with the SATCAT object type and decay records. One row per published element set: epoch, mean elements, B*, object type.</li>
+<li>WDC for Geomagnetism, Kyoto: hourly Dst, 1957–2025, best available version, with each value's processing level (final to 2020, provisional from 2021).</li>
+<li>GFZ Potsdam: 3-hourly Kp, 1932–2025 (with status) and 30-minute Hp30, 1995–2025.</li>
+<li>NASA OMNI2 hourly solar wind and indices, 1963–2025 (used here for daily F10.7 in control matching).</li>
+<li>Space Environment Technologies JB2008 indices (SOLFSMY, DTCFILE), 1997–2025 (not used in Part A; listed because they are in the same frozen snapshot).</li>
+</ol>
+<h3>Data availability</h3>
+<p>The datasets are publicly available. Space-Track requires a free account.</p>
+<h3>Data access</h3>
+<p>Datasets 2–5 are open and stored in the project repository as Parquet snapshots. Space-Track records are retrieved under its User Agreement, which restricts passing the data on; they are therefore not redistributed. The repository contains the retrieval script, which requests 10-day windows ordered by catalogue number and splits any window that reaches Space-Track's 500,000-row limit; anyone with a free account can re-download the same records.</p>
+<h3>Data identifiers</h3>
+<p>Kyoto Dst: doi:10.17593/14515-74000. GFZ Kp: doi:10.5880/Kp.0001. OMNI: https://spdf.gsfc.nasa.gov/pub/data/omni/. Space-Track: https://www.space-track.org (classes gp_history, satcat, decay). Frozen snapshot content hashes (SHA-256, first 16 characters): kyoto_dst 9205e9c482ca2634; gfz_kp 0d703276d8046b70; gfz_hp30 76354f6b1487b9c1; omni2_hourly ef4470e2823931a7; set_solfsmy 2fa4822a649ce754; set_dtc b1d4c82b1c85afae. Full hashes are in the attached <code>manifest.json</code>.</p>
+<h3>Access date</h3>
+<p>Datasets 2–5: 20 November 2026. Space-Track: 20–21 November 2026 (27 windows from February 2024 onward re-fetched on 21 November 2026 after the row-limit split was added).</p>
+<h3>Data collection procedures</h3>
+<p>GP element sets are produced by the US Space Surveillance Network and published by Space-Track; publication cadence, accuracy and object coverage vary by object and over time, and element sets carry no covariance (Flohrer et al., 2008). Dst is derived from four low-latitude observatories (Sugiura and Kamei, 1991; WDC Kyoto documentation). Kp follows Matzka et al. (2021). OMNI follows King and Papitashvili (2005). Known biases: the public catalogue omits classified objects and the precise special-perturbations catalogue; catalogue size grows strongly after 2019 (commercial constellations); provisional Dst may be revised; element-set publication cadence changes over time, falling to about 0.55 sets per object per day in 2013–2014 from about 1.2 before and after (entered as a covariate).</p>
+<h3>Codebook</h3>
+<p>Field definitions: Space-Track GP/OMM documentation (https://www.space-track.org/documentation); OMNI2 word list (https://omniweb.gsfc.nasa.gov/html/ow_data.html); Kyoto HAPI information for dataset hour_dst; GFZ Kp documentation. The attached <code>config.yaml</code> defines every derived variable used here.</p>
+<h2>3. Variables</h2>
+<h3>Manipulated variables</h3>
+<p>Not applicable (observational study).</p>
+<h3>Measured variables</h3>
+<p><strong>Storms.</strong> A storm is a run of hours with Dst below −100 nT; runs separated by fewer than 24 hours are one storm. Storm time t0 is the hour of minimum Dst; the storm window runs from t0 − 3 days to t0 + 10 days. Storms with minimum below −250 nT are labelled severe. February 2022 (minimum about −66 nT) is a named anchor, reported but excluded from the H1 and H2 models.</p>
+<p><strong>Quiet-time controls.</strong> Five 14-day windows per storm, with no G1-or-higher conditions throughout (Kp at most 5−), mean F10.7 within 40 sfu of the storm window's, catalogue year within ±3, no overlap with any storm window. Controls may serve more than one storm; F10.7, season and catalogue size are handled as covariates.</p>
+<p><strong>Custody proxies</strong> (outcomes), computed daily per 50 km mean-altitude band and population from consecutive element sets of each object:</p>
+<ul>
+<li>P1 staleness: share of tracked objects (newest element set at most 30 days old) whose newest set is older than 24 hours at 00 UT (48 and 72 hours are secondary).</li>
+<li>P2 correction: the older set propagated with SGP4 to the newer set's epoch versus the newer set; in-track component as a z-score against the object's own quiet-day (daily maximum Kp ≤ 3) distribution over the previous 30 days. Proxy: share of element-set pairs with z above 3.</li>
+<li>P3 gate exceedance: share of tracked objects whose position correction exceeds the band's quiet-time 99th-percentile gate (fixed 5, 10 and 25 km gates are secondary).</li>
+<li>P4 decay: median change in semi-major axis per day; re-entries from decay records are secondary.</li>
+<li>M1 (interim): orbit-raise events among active payloads, reported descriptively only.</li>
+</ul>
+<p><strong>Populations.</strong> Primary: inactive objects (debris, rocket bodies, and payloads with no semi-major-axis step above 0.5 km in the previous 365 days) with mean altitude below 600 km. Secondary: all inactive LEO objects; active payloads.</p>
+<p><strong>Outcome per storm.</strong> For each proxy, the storm's peak ratio: the largest daily value from day 0 to day +10 after t0, divided by the mean of the same proxy over its controls. Recovery time (days until the proxy returns inside the controls' 95% band) is secondary.</p>
+<p><strong>Predictors.</strong> Dst summaries: minimum Dst; hours with Dst below −100 nT; integrated Dst over the window. Betti features (24-hour windows every 3 hours, delay embedding d = 3, tau = 3 h, Vietoris–Rips on an absolute 0–60 nT scale): maximum and mean beta0 at 15 nT; maximum beta1 at 15 nT; mean area under the beta0 curve; mean total beta1.</p>
+<p><strong>Covariates.</strong> Storm-window mean F10.7; catalogue size (tracked objects on the day before t0, log); publication cadence (element sets per tracked object per day over the 30 days before t0); season (sine and cosine of t0's day of year).</p>
+<h3>Missing data</h3>
+<p>All 108 study storms have complete Dst windows. One storm (12 August 2024) has 2 rather than 5 controls and is kept. Days without element sets for a band are missing for that band and day. Element sets before 1 January 2000 were not retrieved, so staleness in the first days of 2000 is undercounted; no study storm falls in that period. The proxy tables have no missing days from 2000 to 2025 in the primary population. Expected sample after exclusions: 107 intense storms.</p>
+<h3>Unit of analysis</h3>
+<p>The storm. Included: every storm with t0 from 1 January 2000 to 31 December 2025 meeting the storm definition. Excluded from the models: the February 2022 anchor (below the threshold). Expected n = 107.</p>
+<h3>Statistical outliers</h3>
+<p>No storm is removed. Severe storms are expected to be influential; robustness checks (section 5) repeat each test with robust regression and with the 10 severe storms excluded.</p>
+<h3>Sampling weights</h3>
+<p>None. The storm set is the full population of intense storms in 2000–2025, not a sample.</p>
+<h2>4. Knowledge of data</h2>
+<h3>Prior publication/dissemination</h3>
+<p>None by the author on these datasets. An external reviewer read the draft methods in November 2026; no results were shared with the reviewer before this registration.</p>
+<h3>Prior knowledge</h3>
+<p>Before this registration, the following were done on the full 2000–2025 data:</p>
+<ol>
+<li>Storm catalogue, controls and split were built from Dst, Kp and F10.7. The control rule in section 3 replaced the originally planned rule (14 days with Kp ≤ 3, F10.7 within 20 sfu, season ±45 days, year ±1, unique controls) because that rule found five controls for none of the 107 intense storms. The change was decided on control availability alone, before any custody proxy was compared between storms and controls.</li>
+<li>Dst Betti features were computed for all study storms, and the H2 preconditions were run: the hour-shuffle test (shuffling changed Betti features in all 108 storms, as required by construction) and the IAAFT surrogate test (real storms differed from 99 surrogates at p ≤ 0.05 in 54% of storms). Betti features were not related to any catalogue outcome.</li>
+<li>The custody-proxy pipeline was checked on real data for the year 2000 only. In that check the authors saw daily proxy counts on days around the 7 April 2000 and 16 July 2000 storms (for example, about 2,600 objects with P2 z-scores above 3 on 16–17 July 2000, against a typical 400). These two storms remain in the analysis; a robustness check excludes them (section 5).</li>
+<li>Proxy tables for 2000–2025 were computed and checked for coverage and processing errors only (row counts, missing days, SGP4 failures, element sets per object per year); this check found the 2013–2014 cadence drop that led to the cadence covariate. No storm-versus-control comparison, peak ratio or regression was computed.</li>
+<li>Physics-gate quantities for Part B (driver tail fits, Dst model calibration) were computed; they do not enter Part A.</li>
+</ol>
+<p>Prior knowledge from the literature: storm duration matters for orbital decay (Oliveira and Zesta, 2019; Oliveira et al., 2020); mass manoeuvring and reduced element-set cadence in May 2024 (Parker and Linares, 2024); storm-driven element-set errors (Berger et al., 2020).</p>
+<p>Jayabrata Bhaduri directed and saw items 1–5.</p>
+<h2>5. Analyses</h2>
+<h3>Statistical models</h3>
+<p>For each of the four primary proxies (P1–P4), the outcome is log(peak ratio). Three nested linear regressions (ordinary least squares):</p>
+<ul>
+<li>M0: outcome ~ minimum Dst + covariates (F10.7, log catalogue size, publication cadence, sine and cosine of day of year)</li>
+<li>M1: M0 + hours below −100 nT + integrated Dst</li>
+<li>M2: M1 + the first two principal components of the five standardised Betti features (the PCA is fitted inside each training fold only)</li>
+</ul>
+<p>Each model is evaluated by leave-one-storm-out (LOSO) cross-validation over the 107 intense storms, giving one out-of-sample squared error per storm and model. H1 compares M1 with M0; H2 compares M2 with M1. For each proxy, the test is a one-sided Wilcoxon signed-rank test on the paired per-storm squared errors (alternative: the larger model has lower error), with the relative reduction in LOSO mean squared error and its 95% bootstrap interval (2,000 resamples of storms).</p>
+<h3>Effect size</h3>
+<p>The smallest effect of interest is a 5% relative reduction in LOSO mean squared error.</p>
+<h3>Statistical power</h3>
+<p>No a priori power analysis: the sample is the complete population of intense storms in 2000–2025 (n = 107) and cannot be enlarged. Effect sizes are reported with 95% intervals so that null results can be read as estimates, not only as non-significance.</p>
+<h3>Inference criteria</h3>
+<p>One-sided tests at alpha = 0.05, with Holm correction across the four primary proxies within each hypothesis. A hypothesis is supported for a proxy when its Holm-adjusted p is below 0.05 and the 95% interval of the error reduction excludes zero. H1 (or H2) is supported overall when this holds for at least three of the four primary proxies; for one or two proxies it is reported as partially supported; otherwise as not supported. Every result is reported whichever way it falls.</p>
+<h3>Assumption violation / model non-convergence</h3>
+<p>The Wilcoxon test makes no normality assumption about the errors. If the predictors are strongly collinear (variance inflation factor above 10, for example between hours below −100 nT and integrated Dst), the models are refitted as ridge regressions with a fixed penalty of 1.0 on standardised predictors, and both fits are reported. A proxy with fewer than 80 storms with complete data is reported descriptively and excluded from the hypothesis count.</p>
+<h3>Reliability and robustness testing</h3>
+<p>Each test is repeated (1) with Huber robust regression; (2) excluding the 10 severe storms; (3) excluding the 7 April and 16 July 2000 storms seen during pipeline checks; (4) on final-Dst storms only (2000–2020); (5) with the secondary proxies (48- and 72-hour staleness, fixed 5, 10 and 25 km gates); (6) for all inactive LEO objects and for active payloads; (7) where at least three controls exist under it, with the originally planned stricter control rule. Conclusions are claimed only where they hold across checks 1–4.</p>
+<h3>Exploratory analysis</h3>
+<p>Reported separately and labelled exploratory: superposed-epoch curves of every proxy against its controls; recovery times; the interim manoeuvre measure M1 and the May 2024 mass manoeuvre; topological features of the catalogue itself (point clouds of objects in proxy space); and differences between altitude bands.</p>
+<h2>Attached files</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>config.yaml</code></td>
+<td>Every storm, control, proxy, topology and Part A analysis setting, at the commit above</td>
+</tr>
+<tr>
+<td><code>manifest.json</code></td>
+<td>Full SHA-256 hashes, row counts and retrieval times of the public data snapshots</td>
+</tr>
+<tr>
+<td><code>storms.csv</code></td>
+<td>The 108 study storms with split labels, and every storm since 1957</td>
+</tr>
+<tr>
+<td><code>controls.csv</code></td>
+<td>The control windows for each storm</td>
+</tr>
+</tbody>
+</table>
+<p>Not attached: the Space-Track records (redistribution is restricted) and the code (the repository stays private until publication; the commit hash above pins the version).</p>
+<h2>References</h2>
+<p>Berger, T. et al. (2020). Flying through uncertainty. Space Weather 18. · Flohrer, T., Krag, H. and Klinkrad, H. (2008). Assessment and categorization of TLE orbit errors for the US SSN catalogue. AMOS. · King, J. H. and Papitashvili, N. E. (2005). JGR 110, A02104. · Matzka, J. et al. (2021). Space Weather 19, e2020SW002641. · Oliveira, D. M. and Zesta, E. (2019). Space Weather 17, 1510–1533. · Oliveira, D. M. et al. (2020). Space Weather 18, e2020SW002472. · Parker, W. E. and Linares, R. (2024). J. Spacecraft and Rockets. · Sugiura, M. and Kamei, T. (1991). IAGA Bulletin 40.</p></body></html>

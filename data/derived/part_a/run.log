@@ -1,0 +1,11 @@
+[part_a] primary                      n=107  H1 not supported (0/4)  H2 not supported (0/4)
+[part_a] huber                        n=107  H1 not supported (0/4)  H2 not supported (0/4)
+[part_a] exclude_severe               n= 97  H1 not supported (0/4)  H2 not supported (0/4)
+[part_a] exclude_2000_04_07_and_07_16 n=105  H1 not supported (0/4)  H2 not supported (0/4)
+[part_a] final_dst_only               n= 83  H1 not supported (0/4)  H2 not supported (0/4)
+[part_a] secondary_proxies            n=107  H1 not supported (0/4)  H2 not supported (0/4)
+[part_a] all_inactive_leo             n=107  H1 not supported (0/4)  H2 not supported (0/4)
+[part_a] active                       n=107  H1 not supported (0/4)  H2 not supported (0/4)
+[part_a] original control rule: 2 storms with >= 3 controls
+[part_a] original_control_rule        n=  2  H1 not supported (0/4)  H2 not supported (0/4)
+[part_a] primary verdict holds across robustness checks 1-4: {'H1': True, 'H2': True}

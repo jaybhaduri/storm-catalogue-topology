@@ -1,0 +1,190 @@
+<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Georgia,serif;font-size:10.5pt;line-height:1.45;max-width:170mm;margin:auto}h1{font-size:16pt}h2{font-size:13pt;margin-top:18pt;border-bottom:1px solid #999}h3{font-size:11pt;margin-bottom:2pt}table{border-collapse:collapse}td,th{border:1px solid #999;padding:3pt 6pt;font-size:9.5pt}code{font-size:9pt}@page{size:A4;margin:18mm}</style></head><body><h1>A Thousand Gannons, Registration 3: Storm-locked degradation of the public satellite catalogue in unseen storms</h1>
+<p><strong>Preregistration 3</strong> (secondary-data preregistration; confirmatory replication). It follows Registration 1 (Part A, DOI 10.5281/zenodo.24421887), whose hypotheses H1 and H2 were tested and not supported, and whose exploratory analyses motivate the bets below. Registration 2 (Part B, H4) is separate.</p>
+<ul>
+<li>Author: Jayabrata Bhaduri (CapaCloud Corp; ORCID 0000-0001-6190-145X)</li>
+<li>Authorship note: the version filed on Zenodo (v1) listed a second co-author, who asked on 21 November 2026 to be removed; the Zenodo author list and this text were updated accordingly. Nothing else in the registration was changed.</li>
+<li>Frozen analysis code, sample and settings: repository commit <code>52e3b6ed0408431b4af25750e7db76b5f93d6c9a</code> (private until publication). Command: <code>python -m phinn_sw reg3</code>.</li>
+<li>Structure: follows the questions of the OSF "Secondary Data Preregistration" template</li>
+</ul>
+<h2>1. Study information</h2>
+<h3>Description</h3>
+<p>Registration 1 tested whether storm duration (H1) or the topological shape of the Dst time series (H2) predicts degradation of the public low-Earth-orbit catalogue beyond storm intensity. Neither was supported. Its exploratory analyses found that, in the 107 intense storms of 2000–2025, orbit-determination quality degrades clearly during storms: element-set in-track corrections (P2) and position-gate exceedances (P3) peak at about 1.7–1.8 times their quiet-time level, more in deeper storms. Element-set staleness (P1) does not rise. Those findings were seen in data already analysed, so they cannot be claimed. This registration tests them as predictions on storms not yet analysed: the isolated moderate storms of 2000–2025 (primary) and the intense storms of 2026–2027 (secondary, forward).</p>
+<h3>Research questions</h3>
+<ul>
+<li><strong>RQ1.</strong> Does orbit-determination quality in the public catalogue degrade during moderate geomagnetic storms?</li>
+<li><strong>RQ2.</strong> Is the degradation smaller in moderate storms than in intense storms (dose-response across storm classes)?</li>
+<li><strong>RQ3.</strong> Does the catalogue's publication staleness stay flat during storms while its orbit quality degrades?</li>
+</ul>
+<h3>Hypotheses (bets)</h3>
+<p>All directional. Outcome definitions in section 3.</p>
+<ul>
+<li><strong>B1.</strong> In moderate storms, the in-track correction proxy P2 rises above its quiet-time level: median like-for-like log ratio &gt; 0. Predicted size: ratio about 1.17 (Part A's intense-storm fit extrapolated to each moderate storm's Dst minimum).</li>
+<li><strong>B2.</strong> Moderate-storm degradation is smaller than intense-storm degradation, for both P2 and P3: moderate-storm log ratios are stochastically lower than the frozen Part A intense-storm log ratios (median ratios 1.71 for P2, 1.79 for P3). Won only if both tests pass.</li>
+<li><strong>B3.</strong> In moderate storms, staleness P1 does not rise by 10% or more: median like-for-like log ratio &lt; log(1.10).</li>
+<li><strong>B4 (secondary, forward).</strong> In intense storms from 1 January 2026 to 30 June 2027, P2 and P3 rise above their quiet-time levels (median log ratio &gt; 0 for each). Won only if both tests pass.</li>
+</ul>
+<p>No bet on storm duration or storm shape is made. Design work on the Part A storms (section 4, item 4) found no shape representation that adds predictive power, so such a bet is not expected to be won and is left to exploratory analysis.</p>
+<h2>2. Data description</h2>
+<h3>Datasets used</h3>
+<p>The same frozen public snapshots as Registration 1 (all cut at 31 December 2025): Space-Track GP element-set history for low-Earth-orbit objects with SATCAT and decay records (2000–2025); WDC Kyoto hourly Dst; GFZ Kp and Hp30; NASA OMNI2 hourly (F10.7 for control matching). For B4: Kyoto Dst and Space-Track GP history from 1 November 2025 to 10 July 2027, retrieved after 10 July 2027 with the same scripts, plus GFZ Kp and OMNI F10.7 for the same period for controls.</p>
+<h3>Data availability</h3>
+<p>Publicly available; Space-Track requires a free account.</p>
+<h3>Data access</h3>
+<p>As Registration 1: Dst, Kp, Hp30, OMNI and JB2008 snapshots are in the repository. Space-Track records are not redistributed (User Agreement); anyone with an account can re-download them with the repository's script.</p>
+<h3>Data identifiers</h3>
+<p>Kyoto Dst doi:10.17593/14515-74000; GFZ Kp doi:10.5880/Kp.0001; OMNI https://spdf.gsfc.nasa.gov/pub/data/omni/; Space-Track https://www.space-track.org. Snapshot hashes: Registration 1's <code>manifest.json</code> (attached again). Frozen inputs, SHA-256: <code>moderate_storms.csv</code> 599a202f25608291ff9a58c618f5374db8339c65875a101191d58cdbedb6a96d; <code>moderate_controls.csv</code> 576b8c417bf9def59ce0c110d41f24f4e7fcdaf55f48d203d32e09b7772eae99; Part A reference outcomes <code>explore_like_for_like.csv</code> a49d99f606febfe7b0d64b14ed71cce1eb8436ec2631f33a8fe4853dbde26037.</p>
+<h3>Access date</h3>
+<p>Snapshots: 20 November 2026; Space-Track 2000–2025: 20–21 November 2026. B4 data: after 10 July 2027 (2026 Dst values to 20 November 2026 were viewed on 21 November 2026 to count intense storms; see section 4).</p>
+<h3>Data collection procedures</h3>
+<p>As Registration 1 (element sets from the US Space Surveillance Network via Space-Track, no covariance; Dst from four low-latitude observatories; known biases: classified objects omitted, catalogue growth after 2019, provisional Dst after 2020, cadence drop in 2013–2014).</p>
+<h3>Codebook</h3>
+<p>Space-Track GP/OMM documentation; OMNI2 word list; Kyoto HAPI hour_dst; GFZ Kp documentation. Derived variables: Registration 1's <code>config.yaml</code> and the module docstrings of <code>phinn_sw/reg3.py</code> and <code>phinn_sw/reg3_sample.py</code> at the frozen commit (summarised in section 3).</p>
+<h2>3. Variables</h2>
+<h3>Manipulated variables</h3>
+<p>Not applicable (observational).</p>
+<h3>Measured variables</h3>
+<p><strong>Moderate storm (primary sample).</strong> A run of hours with Dst below −50 nT (runs separated by less than 24 hours merged) whose minimum stays above −100 nT, with t0 (hour of minimum) from 1 January 2000 to 31 December 2025. <strong>Isolated:</strong> no other storm with minimum below −50 nT has its minimum within 10 days before or after t0. This keeps every peak window clear of the intense storms of Registration 1 and of each other. The February 2022 Starlink event is excluded (seen in Part A). Result: 101 storms (minimum −99 to −51 nT, median −62 nT; 81 with final and 20 with provisional Dst at minimum), listed in <code>moderate_storms.csv</code>.</p>
+<p><strong>Quiet-time controls.</strong> Registration 1's rule (14 days with Kp at most 5−, mean F10.7 within 40 sfu, any season, year ±3, reuse allowed), blocking every storm window with minimum below −50 nT. Built from Kp and F10.7 only: 97 storms have 5 controls, 2 have 3–4, 2 have fewer than 3 (<code>moderate_controls.csv</code>).</p>
+<p><strong>Intense storm (B4).</strong> Registration 1's definition (Dst below −100 nT, 24-hour merging), t0 from 1 January 2026 to 30 June 2027, controls by the same rule from data to 10 July 2027.</p>
+<p><strong>Custody proxies.</strong> Registration 1's daily proxies for inactive objects (debris, rocket bodies, payloads without an orbit raise in the past year) with mean altitude below 600 km, counts summed over the 50 km bands from 100 to 550 km:</p>
+<ul>
+<li>P1 staleness: share of tracked objects whose newest element set is older than 24 h.</li>
+<li>P2 in-track correction: share of element-set pairs whose in-track correction z-score (against the object's own quiet-day distribution) exceeds 3.</li>
+<li>P3 gate exceedance: share of tracked objects whose position correction exceeds the band's quiet-time 99th percentile.</li>
+</ul>
+<p><strong>Outcome (like for like).</strong> For each storm and proxy: log of [the maximum daily value over storm days 0 to +10] divided by [the mean, over the storm's controls, of the maximum daily value over control days 0 to +10]. The same statistic sits in the numerator and the denominator. This corrects the upward bias of Registration 1's peak-over-mean ratio.</p>
+<p><strong>Predictors.</strong> Storm class (moderate vs intense) for B2. Minimum Dst for exploratory dose-response.</p>
+<h3>Missing data</h3>
+<p>Storms with fewer than 3 controls are excluded: 2 storms, expected n = 99. Storms whose peak or control statistic is zero or missing for a proxy are excluded for that proxy. If fewer than 80 storms remain for a primary test, that test is reported descriptively and counts as not passed.</p>
+<h3>Unit of analysis</h3>
+<p>The storm. Primary: isolated moderate storms with at least 3 controls (n = 99). Reference (B2): Registration 1's 107 intense storms, with their like-for-like outcomes frozen in <code>explore_like_for_like.csv</code>. B4: intense storms in the forward window; at least 6 are required for a test; otherwise B4 is reported descriptively.</p>
+<h3>Statistical outliers</h3>
+<p>No storm is removed. Rank-based tests are used throughout.</p>
+<h3>Sampling weights</h3>
+<p>None; the sample is the full set of qualifying storms.</p>
+<h2>4. Knowledge of data</h2>
+<h3>Prior publication/dissemination</h3>
+<p>Registration 1 (DOI 10.5281/zenodo.24421887) and its results (H1 and H2 not supported) are being written up. No results on moderate storms have been produced or shared.</p>
+<h3>Prior knowledge</h3>
+<ol>
+<li><strong>Registration 1 results and exploratory analyses</strong> (intense storms, 2000–2025), all of which motivate these bets: P2 and P3 like-for-like median ratios 1.71 and 1.79; P1 0.82; Spearman correlations with minimum Dst −0.29 (P2) and −0.40 (P3).</li>
+<li><strong>Moderate-storm sample and controls</strong> were built from Dst, Kp and F10.7 only. No custody proxy has been computed or viewed for any moderate-storm window.</li>
+<li><strong>Partial exposure.</strong> The daily proxy tables for 2000–2025 exist, and were checked for coverage in Registration 1. For 36 of the 101 moderate storms, some of days 0 to +10 fall inside a Registration 1 control window. Those days entered Registration 1 only as part of 5-window control averages, never as storm outcomes or daily values that were inspected. A registered robustness check excludes these 36 storms (section 5).</li>
+<li><strong>Design work on Registration 1's intense storms</strong> (exploratory, <code>dev_shape_variants.csv</code>). Adding Betti features of Dst or of Hp30 over a focused window (t0 − 1 d to t0 + 3 d), or heating totals (integrated Hp30, JB2008 DTC), did not reduce leave-one-storm-out error for P2 or P3: every variant was 0.2% to 7.9% worse than the Dst-summary model. No shape bet is therefore registered.</li>
+<li><strong>Power analysis</strong> (<code>power.csv</code>, <code>power_gatekeeping.csv</code>) used Registration 1's intense-storm outcomes only (section 5).</li>
+<li><strong>2026 Dst</strong> to 20 November 2026 was viewed to count intense storms for B4 (three so far: 20 January, 22 March and 4 July 2026). No 2026 catalogue data has been retrieved.</li>
+</ol>
+<p>Jayabrata Bhaduri directed and saw items 1–6.</p>
+<h2>5. Analyses</h2>
+<h3>Statistical models</h3>
+<p>Rank-based tests, no regression model.</p>
+<ul>
+<li>B1: one-sided Wilcoxon signed-rank test of moderate-storm P2 log ratios against 0 (alternative: greater).</li>
+<li>B2: two one-sided Mann–Whitney U tests, moderate-storm against Registration 1 intense-storm log ratios (alternative: moderate lower), for P2 and for P3.</li>
+<li>B3: one-sided Wilcoxon signed-rank test of (P1 log ratio − log 1.10) (alternative: less).</li>
+<li>B4: one-sided Wilcoxon signed-rank tests of forward intense-storm P2 and P3 log ratios against 0.</li>
+</ul>
+<p>Effect sizes are reported as median ratios with 95% bootstrap intervals (2,000 resamples of storms); for B2, the difference in median log ratio.</p>
+<h3>Effect size</h3>
+<p>Predicted, from Registration 1's intense storms (log ratio regressed on log |Dst minimum|, evaluated at each moderate storm's minimum):
+- <strong>P2 (B1):</strong> median ratio about 1.17 in moderate storms.
+- <strong>P3:</strong> about 1.0.
+- <strong>P1:</strong> below 1.
+- <strong>Smallest effects of interest:</strong> for B1, a 5% rise in P2 (ratio 1.05); for B3, the margin of a 10% rise in P1.</p>
+<h3>Statistical power</h3>
+<p>Monte Carlo, 4,000–5,000 simulations per scenario. Moderate-storm outcomes were simulated as the predicted effect times a multiplier, plus residuals resampled from the Registration 1 fit; n = 101.</p>
+<table>
+<thead>
+<tr>
+<th>Bet</th>
+<th>Predicted effect</th>
+<th>¾ of predicted</th>
+<th>½ of predicted</th>
+<th>No effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B1</td>
+<td>0.86</td>
+<td>0.63</td>
+<td>0.34</td>
+<td>0.03 (false-positive rate)</td>
+</tr>
+<tr>
+<td>B2 (each test)</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>B3</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>0.99</td>
+<td>0.34</td>
+</tr>
+</tbody>
+</table>
+<p>B4 power with Holm over its two tests: 0.37 (P2) and 0.22 (P3) with 6 storms; 0.80 and 0.55 with 10 storms. B4 is secondary because the number of storms in the forward window is not known in advance.</p>
+<h3>Inference criteria</h3>
+<p>Family-wise alpha 0.05 over the primary bets, by gatekeeping:
+- <strong>Stage 1:</strong> B2-P2, then B2-P3, in fixed order, each at 0.05.
+- <strong>Stage 2:</strong> only if both stage-1 tests pass, B1 and B3 are tested with Holm correction at 0.05.</p>
+<p>A test not reached counts as not passed. A bet is <strong>won</strong> when all of its tests pass, and <strong>lost</strong> otherwise. B4 is a separate family: Holm over its two tests at 0.05, and tested only with at least 6 storms. Every result is reported whichever way it falls.</p>
+<h3>Assumption violation / model non-convergence</h3>
+<p>The tests are distribution-free. Ties and zero differences use SciPy's defaults (Wilcoxon <code>zero_method="wilcox"</code>; exact or normal approximation chosen automatically). If a proxy is undefined for a storm (zero peak or zero control statistic), that storm is dropped for that proxy.</p>
+<h3>Reliability and robustness testing</h3>
+<p>Each of the following repeats the primary tests. They are reported whichever way they fall, and do not change the bet verdicts.
+1. <strong>Partial exposure:</strong> excluding the 36 storms whose peak window overlaps a Registration 1 control window.
+2. <strong>Final Dst only:</strong> storms whose Dst at minimum is final.
+3. <strong>Five controls:</strong> storms with all five controls.
+4. <strong>B1 with P3:</strong> P3 in place of P2.
+5. <strong>Other populations:</strong> all inactive LEO objects (any altitude) and active payloads.</p>
+<p>A won bet is described as robust if it also passes check 1.</p>
+<h3>Exploratory analysis</h3>
+<p>Labelled exploratory in any report:
+- dose-response within moderate storms (Spearman of log ratio with minimum Dst);
+- P4 (decay) and recovery times;
+- superposed-epoch curves of daily proxies;
+- shape models (Betti features of Dst and Hp30, heating totals) applied to moderate storms;
+- altitude-band differences.</p>
+<h2>Attached files</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>moderate_storms.csv</code></td>
+<td>The 101 isolated moderate storms (primary sample)</td>
+</tr>
+<tr>
+<td><code>moderate_controls.csv</code></td>
+<td>Their quiet-time control windows</td>
+</tr>
+<tr>
+<td><code>explore_like_for_like.csv</code></td>
+<td>Registration 1 intense-storm like-for-like outcomes (B2 reference, frozen)</td>
+</tr>
+<tr>
+<td><code>power.csv</code>, <code>power_gatekeeping.csv</code></td>
+<td>Power simulations</td>
+</tr>
+<tr>
+<td><code>dev_shape_variants.csv</code></td>
+<td>Design work on shape models (prior knowledge item 4)</td>
+</tr>
+<tr>
+<td><code>manifest.json</code></td>
+<td>Hashes of the public data snapshots</td>
+</tr>
+</tbody>
+</table>
+<p>Not attached: Space-Track records (redistribution restricted) and the code (private until publication; the commit hash pins the version).</p>
+<h2>References</h2>
+<p>Registration 1: Bhaduri, J. (2026). A Thousand Gannons, Part A (preregistration 1 of 2). Zenodo. doi:10.5281/zenodo.24421887. · Berger, T. et al. (2020). Space Weather 18. · Flohrer, T., Krag, H. and Klinkrad, H. (2008). AMOS. · Oliveira, D. M. and Zesta, E. (2019). Space Weather 17, 1510–1533. · Parker, W. E. and Linares, R. (2024). J. Spacecraft and Rockets.</p></body></html>
