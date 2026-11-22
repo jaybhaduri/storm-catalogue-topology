@@ -58,3 +58,8 @@ python -m pytest -q -m "not network"
 | `data/derived/` | storms, controls, daily custody targets, Betti curves, results tables |
 | `prereg/` | registration texts, filed attachments, results write-ups |
 | `tests/` | unit tests and pipeline dry runs |
+
+## License
+
+Code: [MIT](LICENSE). The public input snapshots keep their providers' terms (GFZ Kp and Hp30: CC BY 4.0;
+cite WDC Kyoto, NASA SPDF and Space Environment Technologies as listed in `data/snapshots/manifest.json`).
